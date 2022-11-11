@@ -1,0 +1,233 @@
+input[type="text"].id {width: 30px;} 
+input[type="text"].id_customer {width: 70px;} 
+select.types {width: 110px;} 
+select.product_name {width: 150px;} 
+input[type="text"].name {width: 90px;}
+input[type="text"].name_ml {width: 50px;} 
+input[type="text"].product {width: 50px;} 
+input[type="text"].product_name {width: 180px;}
+input[type="text"].brand_name {width: 150px;}
+input[type="text"].desc2 {width: 250px;}
+input[type="text"].tin {width: 90px;}
+input[type="text"].mobile {width: 85px;}
+input[type="text"].station {width: 85px;}
+input[type="text"].dt {width: 70px;}
+input[type="text"].types {width: 80px;}
+input[type="text"].digits {width: 90px;} 
+input[type="number"].digits {width: 60px;}
+
+P { font-family:Arial;}
+P.crumbs { font-family:Arial; color: SaddleBrown; font-weight: bold;}
+P.center1 {margin-left: auto; margin-right: auto; width: 60em}
+
+A { font-family:Arial;}
+H1, H2, H3, H4, H5, H6 { font-family:Arial; text-align: center; text-decoration: none;}
+div.Travel {text-align: center;}
+span.redColor { color: red;} 
+
+TABLE.MainT {  padding: 0px; margin-top: 0px; background-color: BlanchedAlmond; border: 0px; width:100%;}
+TD.top{background-color: BlanchedAlmond;}
+TD.center{background-color: white; padding-left:2px;}
+TABLE.width100{width:100%;}
+TABLE.width80{width:80%;}
+TABLE.width50{width:50%;}
+TABLE.width98{width:98%;}
+TD.width50{width:50%;}
+TD.width25{width:25%;}
+TD.width20{width:20%;}
+TD.width80{width:80%;}
+TD.width5{width:5%;}
+
+img.logo { display:block; margin:auto;}
+img.article { position: relative; padding: 0px; float: left; padding: 3px;}
+img.oneGood { position: relative; padding: 0px; float: left; padding: 3px;}
+img.group { position: relative; padding: 0px; display:block; margin:auto; }
+img.action { position: relative; padding: 0px; float: left;}
+
+#callLogo {
+      position: fixed;
+      bottom: 12px;
+      right: 60px;
+       font-weight: bold;
+      cursor: pointer;
+      opacity: 0.0;
+      transition: all 0.5s ease-in;
+}
+
+#scrollToTop {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+       font-weight: bold;
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.5s ease-in;
+}
+
+.inthis{
+text-align:center;
+width:97%;
+border:0px solid gray;
+background:white;
+box-shadow:0 0 0pt white;
+padding:3pt;
+border-radius:4pt;}
+
+.blockGoods{
+	margin:1pt;
+	padding:1pt;
+	border:1px dotted SaddleBrown;
+	border-radius:4pt;
+	width:98%;
+
+	display:inline-block;
+	vertical-align: middle;}
+	
+TD.action{
+	margin:1pt;
+	padding:1pt;
+	border:1px dotted SaddleBrown;
+	border-radius:4pt;
+	width:100%;
+}
+
+nav {background: BlanchedAlmond;}
+nav ul {
+  margin-top: 0px;
+  margin-left: -3px;
+  padding: 0;
+  list-style: none;
+}
+nav ul:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+nav a {
+  text-decoration: none;
+  display: block;
+  transition: .3s linear;
+}
+.topmenu > li {
+  float: left;
+  position: relative;
+  border-left: 1px solid black;
+}
+.topmenu > li:first-child {border-left: 0;}
+.topmenu > li > a {  
+  padding: 10px 10px;
+  
+  color: SaddleBrown;
+  background: BlanchedAlmond;
+  letter-spacing: 2px;
+}
+.topmenu > li > a.active, 
+.submenu a:hover {color: SaddleBrown;}
+.topmenu .fa, 
+.submenu .fa {
+  margin-left: 5px;
+  color: inherit;
+}
+.submenu {
+  position: absolute;
+  z-index: 5;
+  min-width: 150px;
+border-top: 1px solid #CBCBCC;
+  visibility: hidden;
+  opacity: 0; 
+  transform-origin: 0% 0%;
+  transform: rotateX(-90deg);
+  transition: .3s linear;  
+}
+.submenu li {position: relative;}
+.submenu li a {
+  background: BlanchedAlmond;
+  
+  border-left: 1px solid #CBCBCC;
+  border-right: 1px solid #CBCBCC;
+  padding: 5px 5px;
+   margin-left: 0px;
+  border-bottom: 1px solid #CBCBCC;
+}
+.submenu .submenu {
+  position: absolute;
+  left: 100%;
+  top: -1px;
+  transition: .3s linear;
+}
+nav li:hover > .submenu {
+  transform: rotateX(0deg);
+  visibility: visible;
+  opacity: 1;
+}
+
+
+	A:link { color: SaddleBrown; }
+	A:visited { color: SaddleBrown; }
+	A:hover { color: SaddleBrown; }
+	A:active { color: SaddleBrown; } 
+
+div.share { height: 32px; width: 100%;  font-size: 11pt; font-family: 'PT Sans', Arial, sans-serif; font-weight: bold; position: relative; letter-spacing: 1px; }
+div.share ul { padding-top: 2; margin: auto; width:200px; height: auto;  text-align: center; }
+div.share li { display: inline; float: left; margin: 0; }
+div.share a { display: inline-block; width: auto; text-align: center; text-decoration: none; text-shadow: 1px 1px 0px #283744; cursor:pointer; margin: 0; }
+.social_share{float:left;margin-left:5px;color:#fff;padding:2px;}
+	
+	
+
+
+
+	p { text-indent: 25px; text-align:left; color: Black;font-size: 14px;}
+	p.Anchor { text-indent: 25px; text-align:left; color: Black;font-size: 16px; text-indent: 0px;}
+	p.Thick { text-align:center; color: SaddleBrown; font-size: 14px; font-weight: bold;margin-bottom: -10px; margin-top: -10px; margin-left: -27px;}
+	p.ThickTravel { text-align:center; color: red; font-size: 16px; font-weight: bold;margin-bottom: -10px; margin-top: -10px; margin-left: -27px;}
+	p.Simple { text-align:center; color: Black; font-size: 16px; }
+	p.Menu{ color: SaddleBrown; text-decoration: none; font-size: 20px; font-weight: bold;margin-bottom: 3px;}
+	p.Price{ text-indent: 0px; color: red; margin:0; font-size: 14px; font-weight: bold;margin-top: 13px; margin-bottom: -13px; text-align: center;}
+	p.logoName {color: SaddleBrown; text-align: center; font-size: 25px; margin-bottom: -20px; margin-top: -10px; padding-bottom: 0px; font-weight: bold;}
+	
+	H1 { color: SaddleBrown; margin:0; font-size: 22px;margin-bottom: -15px; margin-top: -12px; padding-bottom: 0px;}
+	H2 { color: SaddleBrown; margin:0; font-size: 18px; margin-bottom: -12px;}
+	H3 { color: SaddleBrown; margin:0; font-size: 14px;}
+	H4 { color: SaddleBrown; margin:0; font-size: 14px;}
+	H5 { color: SaddleBrown; margin:0;  font-size: 14px;}
+	H6 { color: SaddleBrown; margin:0;  font-size: 16px;}
+	body {margin:0;}
+	td.MainT {  padding-left:10px;}
+	TABLE.Schedule {  border-collapse: collapse; border: 1px solid black;}
+	TABLE.Goods {  padding: 0px;}
+	th.Schedule { text-align: center; border: 1px solid black; }
+	td.Schedule { padding-left: 15px; border: 1px solid black; }
+	td.Goods {  padding: 0px;  padding-top: 10px;}
+	td.col1 {width: 190px;}
+	
+	A.bigA { text-decoration: none; font-size: 20px; font-weight: bold;} 
+	A.bigATravel { text-decoration: none; font-size: 20px; font-weight: bold; color: SaddleBrown; } 
+	A.middleA { text-decoration: none;  font-size: 18px; font-weight: bold;} 
+	A.smallA { text-decoration: none;  font-size: 14px; font-weight: bold; margin-left : 12px;} 
+	A.bottom { text-decoration: none;  font-size: 14px; font-weight: bold; margin-left : 12px;}
+	A.Bread { text-decoration: none;  font-size: 16px; font-weight: bold;} 
+	
+	.block{
+	margin:3pt;
+	padding:3pt;
+	border:1px dotted SaddleBrown;
+	border-radius:4pt;
+	width:250px;
+	height:220px;
+	display:inline-block;
+	vertical-align: middle;}
+	
+	.blockPoisk{
+	margin:3pt;
+	padding:3pt;
+	border:1px dotted SaddleBrown;
+	border-radius:4pt;
+	width:250px;
+	height:330px;
+	display:inline-block;
+	vertical-align: middle;}
+	
+	img.popular {width: 150px; height: 150px; border: none; }
+
+	
