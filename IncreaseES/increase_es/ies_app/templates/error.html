@@ -1,0 +1,12 @@
+{% load static %}
+{% include 'includes/header.html' %}
+<link rel="stylesheet" href="{% static 'ies_style.css' %}">
+
+<br>
+<h1>ERROR!!!</h1>
+<br><br>
+{{error_msg|safe}}
+<br>
+
+
+{% include 'includes/footer.html' %}

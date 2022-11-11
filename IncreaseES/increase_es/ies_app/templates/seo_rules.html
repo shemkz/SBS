@@ -1,0 +1,223 @@
+{% load static %}
+{% include 'includes/header.html' %}
+<link rel="stylesheet" href="{% static 'ies_style.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<script>
+//*******************************************
+// change color of element to red
+function myChangeFunction(name){
+	//var x=document.getElementById('id_1');  
+	var x=document.forms["form_table"][name];
+        x.style.color='red';
+}    
+ 
+ //***********
+
+var minusI = 0;// for negative index - new row
+var newId = "";
+
+// add new row to table
+function new_row(){
+
+    // add new row and cell
+	minusI += 1;
+	var table = document.getElementById("mytable").getElementsByTagName('tbody')[0];
+	var row = table.insertRow(-1);
+	var cell1 = row.insertCell(0);
+	var cell2 = row.insertCell(1);
+	var cell3 = row.insertCell(2);
+	var cell4 = row.insertCell(3);
+	var cell5 = row.insertCell(4);
+	var cell6 = row.insertCell(5);
+    var cell7 = row.insertCell(6);
+
+	cell1.innerHTML = '<input type="text" class="id" id="idS' + minusI + '" name="idS' + minusI + '" value="' + newId + '" disabled>';
+	cell2.innerHTML = `<select class="level_rule" id="level_ruleS` + minusI + `" name="level_ruleS` + minusI + `" value="">` +
+                        `<option  selected value="">None</option> ` +
+                        `{{seo_level_select|safe}}</select>`;
+    cell3.innerHTML = '<input type="text" class="name_rule" id="name_ruleS' + minusI + '" name="name_ruleS' + minusI + '" value="">';
+	cell4.innerHTML = '<input type="number" class="digits" min="0" max="10" id="rating_ruleS' + minusI + '" name="rating_ruleS' + minusI + '" value="">';
+	cell5.innerHTML = '<textarea class="desc" rows="3" cols="70" id="descriptionS' + minusI + '" name="descriptionS' + minusI + '" value=""></textarea>';
+	cell6.innerHTML = '<input type="text" class="dt" id="date_createS' + minusI + '" name="date_createS' + minusI + '" value="TODAY">';
+    cell7.innerHTML = '';
+    // send data to back-end for insert new records
+	$.ajax({
+           type : "POST",
+           url: "{% url 'seo_rules_insert' %}",
+           data: {
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            dataType: "json",
+           },
+           success: function(data){
+              //alert(data.idMax);
+              nId = "idS" + minusI;
+              document.forms["form_table"][nId].value = data.idMax;
+           },
+           failure: function() {
+           }
+       });            
+}
+
+//**************************
+
+// delete record from collection
+function delete_row(i){
+
+if (i >= 0) {iStr = ""+i;}// for positive index
+    else {iStr = "S"+i*(-1);} // for negative index
+ 
+name_id = "id"+iStr;
+name_level_rule = "level_rule"+iStr;
+name_name_rule = "name_rule"+iStr;
+name_rating_rule = "rating_rule"+iStr;
+name_create_date = "create_date"+iStr;
+name_description = "description"+iStr;
+
+id = document.forms["form_table"][name_id].value;
+// send data to back-end
+$.ajax({
+           type : "POST",
+           url: "{% url 'seo_rules_delete' %}",
+           data: {
+            id : id,
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            dataType: "json",
+           },
+           success: function(data){
+              alert(data.msg);
+           },
+           failure: function() {
+           }
+       }); 
+
+// clear cell
+document.forms["form_table"][name_id].value = "";
+document.forms["form_table"][name_level_rule].value = "";
+document.forms["form_table"][name_name_rule].value = "";
+document.forms["form_table"][name_rating_rule].value = "";
+document.forms["form_table"][name_create_date].value = "";
+document.forms["form_table"][name_description].value = "";
+} 
+//***********
+
+// check permission and hide buttons
+window.onload = function() {
+    if (! ['admin','superUser', 'readAndSite'].includes('{{gPermitLevel}}'))
+	{
+	document.forms["form_table"]["submit"].style.visibility="hidden";
+	document.forms["form_table"]["buttonAdd"].style.visibility="hidden";
+	
+	var flag=1; // element exists
+	i= 0;
+	while ((flag == 1) && (i < 1000)) {
+		str = "buttonDel" + i;
+		if (document.forms["form_table"][str]) {
+		document.forms["form_table"][str].style.visibility="hidden"; }
+		else {flag=0;}
+	i++;}
+	}
+}
+
+//***********
+</script>
+<br>
+<h1>SEO rules</h1>
+<br>
+{% load appname_tags %}
+<form id="form_table" method="POST">
+    {% csrf_token %}
+<table  name="mytable" id="mytable"  border="1" class="Simple"  width="1000px">
+    <tr>
+        <th>ID</th>
+        <th>Level rule</th>
+        <th>Name rule</th>
+        <th>Rating rule</th>
+        <th>Description</th>
+        <th>Create date</th>
+        <th>Delete</th>
+    </tr>
+        {% for value in drivers %}
+        
+    <tr>
+        <td><input type="text" class="id" id="id{{forloop.counter0}}"  name="id{{forloop.counter0}}" 
+            value="{{value|underscoreTag:'_id'}}" disabled></td>
+        <td><select  class="level_rule" id="level_rule{{forloop.counter0}}" name="level_rule{{forloop.counter0}}"
+             onchange="myChangeFunction('level_rule{{forloop.counter0}}')">
+            <option  selected value="{{value|underscoreTag:'seo_level_rule'}}">{{value.level_rule}}</option> {{seo_level_select|safe}}
+            </select></td>
+        <td><input type="text" class="name_rule" id="name_rule{{forloop.counter0}}" name="name_rule{{forloop.counter0}}"
+            value="{{value.name_rule}}" onchange="myChangeFunction('name_rule{{forloop.counter0}}')"></td>
+        <td><input type="number" class="digits" min="0" max="10" id="rating_rule{{forloop.counter0}}" name="rating_rule{{forloop.counter0}}"
+             value="{{value.rating_rule}}"  onchange="myChangeFunction('rating_rule{{forloop.counter0}}')"></td>
+        <td><textarea class="desc"  rows="3" cols="70" id="description{{forloop.counter0}}" name="description{{forloop.counter0}}"
+               onchange="myChangeFunction('description{{forloop.counter0}}')">{{value.description}}</textarea></td>
+
+        <td><input type="text" class="dt" id="create_date{{forloop.counter0}}" name="create_date{{forloop.counter0}}"
+             value="{{value.create_date}}" disabled></td>
+        <td><input type="button" value="Delete" name="buttonDel{{forloop.counter0}}" id="buttonDel{{forloop.counter0}}"
+            onclick="delete_row({{forloop.counter0}})"></td>
+
+    </tr>
+    {% endfor %}
+
+</table>
+<br>
+<div class="Travel">
+<input  type="submit" name="submit" value="submit">
+<input type="button" name="buttonAdd" value="+ Add" onclick="return new_row()">
+</div>
+<div id="output2">
+</div>
+</form>
+
+<script>
+// save data to collection
+$('#form_table').on('submit', function(e){
+    //alert('54');
+    e.preventDefault();
+    var flag=1; // element exists
+	i= - minusI;
+	
+	while ((flag == 1) && (i < 1000)) {// loop for find exists elements
+        if (i >= 0) {iStr = ""+i;}// for positive index
+			else {iStr = "S"+i*(-1);} // for negative index
+                //alert("name_site"+iStr);
+    if(typeof(document.forms["form_table"]['id'+iStr]) == 'undefined' || 
+        document.forms["form_table"]['id'+iStr] == null)
+			{flag=0;}
+    //alert(name_level_rule);
+    if ((i < 0) || // negative index
+		    ((document.forms["form_table"]['id'+iStr]) && // element exists
+		    (document.forms["form_table"]['level_rule'+iStr].style.color == 'red' ||
+		    document.forms["form_table"]['name_rule'+iStr].style.color == 'red' ||
+            document.forms["form_table"]['rating_rule'+iStr].style.color == 'red' ||
+		    document.forms["form_table"]['description'+iStr].style.color == 'red')))
+		    {//.style.color == 'red' - changed
+    // send data to back-end
+      $.ajax({
+           type : "POST",
+           url: "{% url 'seo_rules_save' %}",
+           data: {
+            id : $('#id'+iStr).val(),
+            level_rule : $('#level_rule'+iStr).val(),
+            name_rule : $('#name_rule'+iStr).val(),
+            rating_rule : $('#rating_rule'+iStr).val(),
+            description : $('#description'+iStr).val(),
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            dataType: "json",
+           },
+           success: function(data){
+              $('#output2').html(data.msg) /* response message */
+           },
+           failure: function() {
+           }
+       }); 
+    }//.style.color == 'red' - changed
+    i++;};
+});   
+ 
+</script>
+
+{% include 'includes/footer.html' %}

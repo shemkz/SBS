@@ -1,0 +1,57 @@
+{% load static %}
+{% include 'includes/header.html' %}
+<link rel="stylesheet" href="{% static 'ies_style.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<div id="output"  name="output">
+    <form id="mylogin" name="mylogin" method="POST">
+        {% csrf_token %}
+ 
+        
+        <input type="button" value="Login" onclick="change_pswd()">
+    
+    </form>
+</div>    
+
+
+<script>
+function change_pswd(){
+	p1 = document.forms["mylogin"]["psw"].value;
+	p2 = document.forms["mylogin"]["new_pswd_1"].value;
+	p3 = document.forms["mylogin"]["new_pswd_2"].value;
+	//alert(":" + p2 + ":" + p3 + ":");
+		if (p2 == p3)
+	{
+
+          $.ajax({
+               type : "POST",
+               url: "{% url 'change_password_update' %}",
+               data: {
+                user_name : "{{gUserName}}",
+                pswrd : p1,
+                pswrd_new : p2,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                dataType: "json",
+               },
+               success: function(response){
+            if (response.msg == "error")
+			{ alert("Recheck old password! And try again!"); }
+		    else{
+                msg = "<h2>Login</h2><br>&nbsp<h3>Welcome - " + response.gUserName + 
+                "</h3><br>&nbsp<h3>Permit Level - " + response.gPermitLevel + 
+                    "<br>Password was changed!<br>" +
+                    "</h3><br><br> Your help desk: Mob/WhatsApp - +7(776)2928582"
+                $('#output').html(msg) /* response message */
+                }
+           },
+               failure: function() {
+               }
+           });
+}//(p2 == p3)
+else {alert("New passwords do not match! Please retype!");} 
+}
+</script>
+
+  
+            
+{% include 'includes/footer.html' %}    

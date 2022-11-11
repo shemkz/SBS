@@ -1,0 +1,222 @@
+{% load static %}
+{% include 'includes/header.html' %}
+<link rel="stylesheet" href="{% static 'ies_style.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<script>
+//*******************************************
+
+// change color of element to red
+function myChangeFunction(name){
+	//var x=document.getElementById('id_1');  
+	var x=document.forms["form_table"][name];
+        x.style.color='red';
+}    
+ 
+//***********
+
+var minusI = 0;// for negative index - new row
+var newId = "";
+
+// add new row to collection
+function new_row(){
+
+	minusI += 1;
+    // add new row and cell
+	var table = document.getElementById("mytable").getElementsByTagName('tbody')[0];
+	var row = table.insertRow(-1);
+	var cell1 = row.insertCell(0);
+	var cell2 = row.insertCell(1);
+	var cell3 = row.insertCell(2);
+	var cell4 = row.insertCell(3);
+	var cell5 = row.insertCell(4);
+	var cell6 = row.insertCell(5);
+
+	cell1.innerHTML = '<input type="text" class="id" id="idS' + minusI + '" name="idS' + minusI + '" value="' + newId + '" disabled>';
+	cell2.innerHTML = '<input type="text" class="name_site" id="name_siteS' + minusI + '" name="name_siteS' + minusI + '" value="">';
+	cell3.innerHTML = '<input type="text" class="main_page" id="main_pageS' + minusI + '" name="main_pageS' + minusI + '" value="">';
+	cell4.innerHTML = '<textarea class="desc" rows="3" cols="70" id="descriptionS' + minusI + '" name="descriptionS' + minusI + '" value=""></textarea>';
+	cell5.innerHTML = '<input type="text" class="dt" id="date_createS' + minusI + '" name="date_createS' + minusI + '" value="TODAY">';
+    cell6.innerHTML = '';
+
+    // send data to back-end for insert new records
+	$.ajax({
+           type : "POST",
+           url: "{% url 'sites_insert' %}",
+           data: {
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            dataType: "json",
+           },
+           success: function(data){
+              //alert(data.idMax);
+              nId = "idS" + minusI;
+              document.forms["form_table"][nId].value = data.idMax;
+		        cell6.innerHTML = `<input type="button" value="Pages..." 
+                        	onclick="window.location.replace('/site_pages?pId=` + data.idMax.trim() + `');">`;
+           },
+           failure: function() {
+           }
+       });            
+}
+
+//**************************
+
+// delete record from collection
+function delete_row(i){
+
+if (i >= 0) {iStr = ""+i;}// for positive index
+    else {iStr = "S"+i*(-1);} // for negative index
+ 
+nId = "id"+iStr;
+nNameSite = "name_site"+iStr;
+nMainPage = "main_page"+iStr;
+nDateCreate = "create_date"+iStr;
+nDesc = "description"+iStr;
+
+id = document.forms["form_table"][nId].value;
+
+// send data to back-end
+$.ajax({
+           type : "POST",
+           url: "{% url 'sites_delete' %}",
+           data: {
+            id : id,
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            dataType: "json",
+           },
+           success: function(data){
+              //alert(data.msg);
+           },
+           failure: function() {
+           }
+       }); 
+
+
+document.forms["form_table"][nId].value = "";
+document.forms["form_table"][nNameSite].value = "";
+document.forms["form_table"][nMainPage].value = "";
+document.forms["form_table"][nDesc].value = "";
+document.forms["form_table"][nDateCreate].value = "";
+} 
+
+//***********
+
+// check permission and hide buttons
+window.onload = function() {
+    //alert('{{gPermitLevel}}');
+    if (! ['superUser', 'admin'].includes('{{gPermitLevel}}')) // edit only for 'superUser', 'admin'
+	{
+	document.forms["form_table"]["submit"].style.visibility="hidden";
+	document.forms["form_table"]["buttonAdd"].style.visibility="hidden";
+	
+	var flag=1; // element exists
+	i= 0;
+	while ((flag == 1) && (i < 1000)) {
+		str = "buttonDel" + i;
+		if (document.forms["form_table"][str]) {
+		document.forms["form_table"][str].style.visibility="hidden"; }
+		else {flag=0;}
+	i++;}
+	}
+}
+
+//***********
+</script>
+
+<br>
+<h1>Sites</h1>
+<br>
+{% load appname_tags %}
+<form id="form_table" method="POST">
+    {% csrf_token %}
+
+<table  name="mytable" id="mytable"  border="1" class="Simple" width="1000px">
+    <tr>
+        <th>ID</th>
+        <th>Name site</th>
+        <th>Main page</th>
+        <th>Description</th>
+        <th>Create date</th>
+        <th>Details</th>
+        <th>Delete</th>
+
+        {% for value in drivers %}
+        
+    <tr>
+        <td><input type="text" class="id" id="id{{forloop.counter0}}"  name="id{{forloop.counter0}}" 
+            value="{{value|underscoreTag:'_id'}}" disabled></td>
+        <td><input type="text" class="name_site" id="name_site{{forloop.counter0}}" name="name_site{{forloop.counter0}}"
+            value="{{value.name_site}}" onchange="myChangeFunction('name_site{{forloop.counter0}}')"></td>
+        <td><input type="text" class="main_page" id="main_page{{forloop.counter0}}" name="main_page{{forloop.counter0}}"
+             value="{{value.main_page}}"  onchange="myChangeFunction('main_page{{forloop.counter0}}')"></td>
+        <td><textarea class="desc"  rows="3" cols="70" id="description{{forloop.counter0}}" name="description{{forloop.counter0}}"
+               onchange="myChangeFunction('description{{forloop.counter0}}')">{{value.description}}</textarea></td>
+        <td><input type="text" class="dt" id="create_date{{forloop.counter0}}" name="create_date{{forloop.counter0}}"
+             value="{{value.create_date}}" disabled></td>
+        <td><input type="button" value="Pages..." 
+            onclick="window.location.replace('http://localhost:8000/site_pages/{{value.name_site}}');"></td>
+        <td><input type="button" value="Delete" name="buttonDel{{forloop.counter0}}" id="buttonDel{{forloop.counter0}}"
+            onclick="delete_row({{forloop.counter0}})"></td>
+
+    </tr>
+    {% endfor %}
+
+</table>
+<br>
+<div class="Travel">
+<input  type="submit" name="submit" value="submit">
+<input type="button" name="buttonAdd" value="+ Add" onclick="return new_row()">
+</div>
+<div id="output2">
+</div>
+</form>
+<script>
+
+// save data to collection
+$('#form_table').on('submit', function(e){
+    //alert('54');
+    e.preventDefault();
+    var flag=1; // element exists
+	i= - minusI;
+        // loop for find exists elements
+		while ((flag == 1) && (i < 1000)) {
+    		if (i >= 0) {iStr = ""+i;}// for positive index
+			else {iStr = "S"+i*(-1);} // for negative index
+            
+            //alert("name_site"+iStr);
+            if(typeof(document.forms["form_table"]["name_site"+iStr]) == 'undefined' || 
+                document.forms["form_table"]["name_site"+iStr] == null)
+                    {flag=0;} // element not exists
+            //alert($(name_id).val());
+            if ((i < 0) || // negative index
+                    ((document.forms["form_table"]['id'+iStr]) && // element exists
+                    (document.forms["form_table"]['name_site'+iStr].style.color == 'red' ||
+                    document.forms["form_table"]['main_page'+iStr].style.color == 'red' ||
+                    document.forms["form_table"]['description'+iStr].style.color == 'red')))
+                {//.style.color == 'red' - changed
+            // send data to back-end
+            $.ajax({
+                type : "POST",
+                url: "{% url 'sites_save' %}",
+                data: {
+                    id : $('#id'+iStr).val(),
+                    name_site : $('#name_site'+iStr).val(),
+                    main_page : $('#main_page'+iStr).val(),
+                    description : $('#description'+iStr).val(),
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    dataType: "json",
+                },
+                success: function(data){
+                    $('#output2').html(data.msg) /* response message */
+                },
+                failure: function() {
+                }
+            }); 
+            }//.style.color == 'red' - changed
+    i++;};
+});   
+ 
+</script>
+
+{% include 'includes/footer.html' %}

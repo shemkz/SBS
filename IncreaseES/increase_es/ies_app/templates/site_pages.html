@@ -1,0 +1,324 @@
+{% load static %}
+{% include 'includes/header.html' %}
+<link rel="stylesheet" href="{% static 'ies_style.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<script>
+//*******************************************
+
+// change color of element to red
+function myChangeFunction(name){
+	//var x=document.getElementById('id_1');  
+	var x=document.forms["form_table"][name];
+        x.style.color='red';
+}    
+ 
+//***********
+
+var minusI = 0;// for negative index - new row
+var newId = "";
+
+// add new row to collection
+function new_row(){
+
+	minusI += 1;
+    // add new row and cells
+	var table = document.getElementById("mytable").getElementsByTagName('tbody')[0];
+	var row = table.insertRow(-1);
+	var cell1 = row.insertCell(0);
+	var cell2 = row.insertCell(1);
+	var cell3 = row.insertCell(2);
+	var cell4 = row.insertCell(3);
+	var cell5 = row.insertCell(4);
+
+	var cell6 = row.insertCell(5);
+    var cell7 = row.insertCell(6);
+    var cell8 = row.insertCell(7);
+    var cell9 = row.insertCell(8);
+    var cell10 = row.insertCell(9);
+
+    var cell11 = row.insertCell(10);
+    var cell12 = row.insertCell(11);
+    var cell13 = row.insertCell(12);
+    var cell14 = row.insertCell(13);
+    var cell15 = row.insertCell(14);
+
+	cell1.innerHTML = '<input type="text" class="id" id="idS' + minusI + '" name="idS' + minusI + '" value="' + newId + '" disabled>';
+	cell2.innerHTML = '<input type="text" class="name_site" id="name_siteS' + minusI + '" name="name_siteS' + minusI + '" value="{{name_site}}">';
+	cell3.innerHTML = '<input type="number" class="digits" min="1" max="4" id="level_pageS' + minusI + '" name="level_pageS' + minusI + '" value="">';
+	cell4.innerHTML = '<input type="text" class="key_phrase" id="key_phraseS' + minusI + '" name="key_phraseS' + minusI + '" value="">';
+    cell5.innerHTML = '<input type="number" class="digits" id="quantity_requestS' + minusI + '" name="quantity_requestS' + minusI + '" value="">';
+
+    cell6.innerHTML = '<input type="number" class="digits" min="0" max="12" id="competition_levelS' + minusI + '" name="competition_levelS' + minusI + '" value="">';
+    cell7.innerHTML = '<input type="number" class="digits" id="errorsS' + minusI + '" name="errorsS' + minusI + '" value="">';
+    cell8.innerHTML = '<input type="number" class="digits" min="0" max="100" id="duplicationS' + minusI + '" name="duplicationS' + minusI + '" value="">';
+    cell9.innerHTML = '<input type="number" class="digits" id="quantity_wordsS' + minusI + '" name="quantity_wordsS' + minusI + '" value="">';
+    cell10.innerHTML = '<input type="text" class="name_site" min="0" max="100" id="keyword_percentageS' + minusI + '" name="keyword_percentageS' + minusI + '" value="">';
+
+    cell11.innerHTML = '<input type="number" class="digits" id="number_keywordsS' + minusI + '" name="number_keywordsS' + minusI + '" value="">';
+    cell12.innerHTML = '<input type="number" class="digits" min="0" max="100" id="percentage_keywordsS' + minusI + '" name="percentage_keywordsS' + minusI + '" value="">';
+    cell13.innerHTML = '<input type="text" class="url" id="urlS' + minusI + '" name="urlS' + minusI + '" value="">';
+    cell14.innerHTML = '<input type="number" class="digits" min="0" max="500" id="priceS' + minusI + '" name="priceS' + minusI + '" value="">';
+	cell15.innerHTML = '<input type="text" class="dt" id="date_createS' + minusI + '" name="date_createS' + minusI + '" value="TODAY">';
+
+    // send data to back-end for insert new records
+	$.ajax({
+           type : "POST",
+           url: "{% url 'site_pages_insert' %}",
+           data: {
+            name_site: "{{name_site}}",
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            dataType: "json",
+           },
+           success: function(data){
+              //alert(data.idMax);
+              nId = "idS" + minusI;
+              document.forms["form_table"][nId].value = data.idMax;
+           },
+           failure: function() {
+           }
+       });            
+}
+
+//**************************
+
+// delete record from collection
+function delete_row(i){
+
+if (i >= 0) {iStr = ""+i;}// for positive index
+    else {iStr = "S"+i*(-1);} // for negative index
+ 
+    name_id = 'id'+iStr;
+    name_name_site = 'name_site'+iStr;
+    name_level_page = 'level_page'+iStr;
+    name_key_phrase = 'key_phrase'+iStr;
+    name_quantity_request = 'quantity_request'+iStr;
+
+    name_competition_level  = 'competition_level'+iStr;
+    name_errors = 'errors'+iStr;
+    name_duplication = 'duplication'+iStr;
+    name_quantity_words = 'quantity_words'+iStr;
+    name_keyword_percentage = 'keyword_percentage'+iStr;
+
+    name_number_keywords = 'number_keywords'+iStr;
+    name_percentage_keywords = 'percentage_keywords'+iStr;
+    name_url = 'url'+iStr;
+    name_price = 'price'+iStr;
+    name_create_date = 'create_date'+iStr;
+
+id = document.forms["form_table"][name_id].value;
+
+// send data to back-end
+$.ajax({
+           type : "POST",
+           url: "{% url 'site_pages_delete' %}",
+           data: {
+            id : id,
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            dataType: "json",
+           },
+           success: function(data){
+              alert(data.msg);
+           },
+           failure: function() {
+           }
+       }); 
+
+// clear cell
+document.forms["form_table"][name_id].value = "";
+document.forms["form_table"][name_name_site].value = "";
+document.forms["form_table"][name_level_page].value = "";
+document.forms["form_table"][name_key_phrase].value = "";
+document.forms["form_table"][name_quantity_request].value = "";
+
+document.forms["form_table"][name_competition_level].value = "";
+document.forms["form_table"][name_errors].value = "";
+document.forms["form_table"][name_duplication].value = "";
+document.forms["form_table"][name_quantity_words].value = "";
+document.forms["form_table"][name_keyword_percentage].value = "";
+
+document.forms["form_table"][name_number_keywords].value = "";
+document.forms["form_table"][name_percentage_keywords].value = "";
+document.forms["form_table"][name_url].value = "";
+document.forms["form_table"][name_price].value = "";
+document.forms["form_table"][name_create_date].value = "";
+} 
+
+//***********
+
+// check permission and hide buttons
+window.onload = function() {
+    if (! ['admin','superUser', 'readAndSite'].includes('{{gPermitLevel}}'))
+	{
+	document.forms["form_table"]["submit"].style.visibility="hidden";
+	document.forms["form_table"]["buttonAdd"].style.visibility="hidden";
+	
+	var flag=1; // element exists
+	i= 0;
+	while ((flag == 1) && (i < 1000)) {
+		str = "buttonDel" + i;
+		if (document.forms["form_table"][str]) {
+		document.forms["form_table"][str].style.visibility="hidden"; }
+		else {flag=0;}
+	i++;}
+	}
+}
+
+//***********
+</script>
+<br>
+<h1>Site Pages</h1>
+<br>
+{% load appname_tags %}
+<form id="form_table" method="POST">
+    {% csrf_token %}
+<table  name="mytable" id="mytable"  border="1" class="Simple"  width="1100px">
+    <tr>
+        <th>ID</th>
+        <th>Name site</th>
+        <th>Level page</th>
+        <th>Key phrase</th>
+        <th>Quant req/m</th>
+
+        <th>Compet level</th>
+        <th>Errors</th>
+        <th>Duplic percent</th>
+        <th>Quant words</th>
+        <th>KeyWord percentage</th>
+
+        <th>Number KW</th>
+        <th>Percent KW</th>
+        <th>Url</th>
+        <th>Percent price</th>
+        <th>Create date</th>
+        <th>Delete</th>
+
+        {% for value in drivers %}
+        
+    <tr>
+        <td><input type="text" class="id" id="id{{forloop.counter0}}"  name="id{{forloop.counter0}}" 
+            value="{{value|underscoreTag:'_id'}}" disabled></td>
+        <td><input type="text" class="name_site" id="name_site{{forloop.counter0}}" name="name_site{{forloop.counter0}}"
+            value="{{value.name_site}}" onchange="myChangeFunction('name_site{{forloop.counter0}}')"></td>
+        <td><input type="number" class="digits" min="1" max="4" id="level_page{{forloop.counter0}}" name="level_page{{forloop.counter0}}"
+             value="{{value.level_page}}"  onchange="myChangeFunction('level_page{{forloop.counter0}}')"></td>
+        <td><input type="text" class="key_phrase" id="key_phrase{{forloop.counter0}}" name="key_phrase{{forloop.counter0}}"
+            value="{{value.key_phrase}}"  onchange="myChangeFunction('key_phrase{{forloop.counter0}}')"></td>
+        <td><input type="number" class="digits" id="quantity_request{{forloop.counter0}}" name="quantity_request{{forloop.counter0}}"
+            value="{{value.quantity_request}}"  onchange="myChangeFunction('quantity_request{{forloop.counter0}}')"></td>
+
+        <td><input type="number" class="digits" min="0" max="12" id="competition_level{{forloop.counter0}}" name="competition_level{{forloop.counter0}}"
+            value="{{value.competition_level}}"  onchange="myChangeFunction('competition_level{{forloop.counter0}}')"></td>
+        <td><input type="number" class="digits" id="errors{{forloop.counter0}}" name="errors{{forloop.counter0}}"
+            value="{{value.errors}}"  onchange="myChangeFunction('errors{{forloop.counter0}}')"></td>
+        <td><input type="number" class="digits" min="0" max="100" id="duplication{{forloop.counter0}}" name="duplication{{forloop.counter0}}"
+            value="{{value.duplication}}"  onchange="myChangeFunction('duplication{{forloop.counter0}}')"></td>
+        <td><input type="number" class="digits" id="quantity_words{{forloop.counter0}}" name="quantity_words{{forloop.counter0}}"
+            value="{{value.quantity_words}}"  onchange="myChangeFunction('quantity_words{{forloop.counter0}}')"></td>
+        <td><input type="text" class="name_site" min="0" max="100" id="keyword_percentage{{forloop.counter0}}" name="keyword_percentage{{forloop.counter0}}"
+            value="{{value.keyword_percentage}}"  onchange="myChangeFunction('keyword_percentage{{forloop.counter0}}')"></td>
+
+        <td><input type="number" class="digits" id="number_keywords{{forloop.counter0}}" name="number_keywords{{forloop.counter0}}"
+            value="{{value.number_keywords}}"  onchange="myChangeFunction('number_keywords{{forloop.counter0}}')"></td>
+        <td><input type="number" class="digits" min="0" max="100" id="percentage_keywords{{forloop.counter0}}" name="percentage_keywords{{forloop.counter0}}"
+            value="{{value.percentage_keywords}}"  onchange="myChangeFunction('percentage_keywords{{forloop.counter0}}')"></td>
+        <td><input type="text" class="url" id="url{{forloop.counter0}}" name="url{{forloop.counter0}}"
+            value="{{value.url}}"  onchange="myChangeFunction('url{{forloop.counter0}}')"></td>
+        <td><input type="number" class="digits" min="0" max="500" id="price{{forloop.counter0}}" name="price{{forloop.counter0}}"
+            value="{{value.price}}"  onchange="myChangeFunction('price{{forloop.counter0}}')"></td>
+        <td><input type="text" class="dt" id="create_date{{forloop.counter0}}" name="create_date{{forloop.counter0}}"
+             value="{{value.create_date}}" disabled></td>
+
+        <td><input type="button" value="Delete" name="buttonDel{{forloop.counter0}}" id="buttonDel{{forloop.counter0}}"
+            onclick="delete_row({{forloop.counter0}})"></td>
+
+    </tr>
+    {% endfor %}
+
+</table>
+<br>
+<div class="Travel">
+<input  type="submit" name="submit" value="submit">
+<input type="button" name="buttonAdd" value="+ Add" onclick="return new_row()">
+</div>
+<div id="output2">
+</div>
+</form>
+<script>
+
+    $('#form_table').on('submit', function(e){
+    //alert('54');
+    e.preventDefault();
+    var flag=1; // element exists
+	i= - minusI;
+	// loop for find exists elements
+	while ((flag == 1) && (i < 1000)) {
+        
+		if (i >= 0) {iStr = ""+i;}// for positive index
+			else {iStr = "S"+i*(-1);} // for negative index
+            
+    //alert("name_site"+iStr);
+    if(typeof(document.forms["form_table"]["id"+iStr]) == 'undefined' || 
+        document.forms["form_table"]["id"+iStr] == null)
+			{flag=0;}
+    else{//element exists
+    //alert($(name_id).val());
+    if ((i < 0) || // negative index always update
+		    ((document.forms["form_table"]['id'+iStr]) && // element exists
+		    (document.forms["form_table"]['name_site'+iStr].style.color == 'red' ||
+		    document.forms["form_table"]['level_page'+iStr].style.color == 'red' ||
+            document.forms["form_table"]['key_phrase'+iStr].style.color == 'red' ||
+            document.forms["form_table"]['quantity_request'+iStr].style.color == 'red' ||
+
+            document.forms["form_table"]['competition_level'+iStr].style.color == 'red' ||
+            document.forms["form_table"]['errors'+iStr].style.color == 'red' ||
+            document.forms["form_table"]['duplication'+iStr].style.color == 'red' ||
+            document.forms["form_table"]['quantity_words'+iStr].style.color == 'red' ||
+            document.forms["form_table"]['keyword_percentage'+iStr].style.color == 'red' ||
+
+            document.forms["form_table"]['number_keywords'+iStr].style.color == 'red' ||
+            document.forms["form_table"]['percentage_keywords'+iStr].style.color == 'red' ||
+            document.forms["form_table"]['url'+iStr].style.color == 'red' ||
+		    document.forms["form_table"]['price'+iStr].style.color == 'red')))
+		{//.style.color == 'red' - changed
+
+        // send data to back-end
+        $.ajax({
+           type : "POST",
+           url: "{% url 'site_pages_save' %}",
+           data: {
+            id : $('#id'+iStr).val(),
+            name_site : $('#name_site'+iStr).val(),
+            level_page : $('#level_page'+iStr).val(),
+            key_phrase : $('#key_phrase'+iStr).val(),
+            quantity_request : $('#quantity_request'+iStr).val(),
+
+            competition_level : $('#competition_level'+iStr).val(),
+            errors : $('#errors'+iStr).val(),
+            duplication : $('#duplication'+iStr).val(),
+            quantity_words : $('#quantity_words'+iStr).val(),
+            keyword_percentage : $('#keyword_percentage'+iStr).val(),
+
+            number_keywords : $('#number_keywords'+iStr).val(),
+            percentage_keywords : $('#percentage_keywords'+iStr).val(),
+            url : $('#url'+iStr).val(),
+            price : $('#price'+iStr).val(),
+
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            dataType: "json",
+           },
+           success: function(data){
+              $('#output2').html(data.msg) /* response message */
+           },
+           failure: function() {
+           }
+       }); //$.ajax
+    } //if(typeof(document.forms["form_table"]["id"+iStr]) == 'undefined'
+    }//element not exists
+    i++;};
+});   
+ 
+</script>
+
+{% include 'includes/footer.html' %}

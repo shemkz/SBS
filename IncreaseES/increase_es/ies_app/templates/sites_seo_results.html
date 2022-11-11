@@ -1,0 +1,56 @@
+{% load static %}
+{% include 'includes/header.html' %}
+<link rel="stylesheet" href="{% static 'ies_style.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<script>
+
+
+function go_seo_results(){
+
+    window.location.href = 'http://localhost:8000/seo_results/' + document.forms["form_table"]["name_site"].value 
+    + '/' + document.forms["form_table"]["search_system"].value;
+} 
+
+
+//***********
+</script>
+
+<br>
+<h1>Sites SEO Results</h1>
+<br>
+{% load appname_tags %}
+<form id="form_table" method="POST">
+    {% csrf_token %}
+        
+    <p>Выберите Сайт:   
+    <select  class="role" id="name_site" name="name_site">
+       <option  selected value="phonealmaty.kz">phonealmaty.kz</option> 
+       {% for value in drivers %}
+       <option value="{{value.name_site}}">{{value.name_site}}.</option> 
+       {% endfor %}
+       </select>
+    </p>    
+    <br>
+    <p>Поисковая Система:
+    <select  class="role" id="search_system" name="search_system">
+        <option  selected value="google.kz(mob.)">google.kz(mob.)</option> 
+        {% for value in search_system_list %}
+        <option value="{{value}}">{{value}}.</option> 
+        {% endfor %}
+        </select>
+    </p> 
+<br>
+<div class="Travel">
+
+<input type="button" name="buttonAdd" value="GO.." onclick="return go_seo_results()">
+</div>
+<div id="output2">
+</div>
+</form>
+<script>
+
+
+
+{% include 'includes/footer.html' %}

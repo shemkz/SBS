@@ -1,0 +1,386 @@
+{% load static %}
+{% include 'includes/header.html' %}
+<link rel="stylesheet" href="{% static 'ies_style.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<style>
+    h1 {
+        color: Green;
+    }
+     
+    div.scroll {
+        margin: 0px, 0px;
+        padding: 0px;
+        /*background-color: #08c708;*/
+        width: 800px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+    }
+</style>
+
+<script>
+
+    function myChangeFunction(name, y){
+        //var x=document.getElementById('id_1');  
+        var x=document.forms["form_table"][name];
+            x.style.color='red';
+        var x2=document.forms["form_table"]["_idx"+y];    
+            x2.style.color='red';
+    }    
+     //*******************************************
+     //***********
+    
+    var minusJ = 0;// for negative index - new row
+    var newId = "";
+    
+    function new_row(){
+    
+        minusJ += 1;
+        var row_id = document.getElementById("row_id");
+        var cell_row_id = row_id.insertCell(-1);
+        var rowsearch_system = document.getElementById("rowsearch_system");
+        var cell_rowsearch_system = rowsearch_system.insertCell(-1);
+        var rowname_site = document.getElementById("rowname_site");
+        var cell_rowname_site = rowname_site.insertCell(-1);
+
+        var rowpos1 = document.getElementById("rowpos1");
+        var cell_rowpos1 = rowpos1.insertCell(-1);
+        var rowpos2 = document.getElementById("rowpos2");
+        var cell_rowpos2 = rowpos2.insertCell(-1);
+        var rowpos3 = document.getElementById("rowpos3");
+        var cell_rowpos3 = rowpos3.insertCell(-1);
+        var rowpos4 = document.getElementById("rowpos4");
+        var cell_rowpos4 = rowpos4.insertCell(-1);
+        var rowpos5 = document.getElementById("rowpos5");
+        var cell_rowpos5 = rowpos5.insertCell(-1);
+
+        var rowpos6 = document.getElementById("rowpos6");
+            var cell_rowpos6 = rowpos6.insertCell(-1);
+        var rowpos7 = document.getElementById("rowpos7");
+            var cell_rowpos7 = rowpos7.insertCell(-1);
+        var rowpos8 = document.getElementById("rowpos8");
+            var cell_rowpos8 = rowpos8.insertCell(-1);
+        var rowpos9 = document.getElementById("rowpos9");
+            var cell_rowpos9 = rowpos9.insertCell(-1);
+        var rowpos10 = document.getElementById("rowpos10");
+            var cell_rowpos10 = rowpos10.insertCell(-1);
+
+        var rowpos11 = document.getElementById("rowpos11");
+            var cell_rowpos11 = rowpos11.insertCell(-1);
+        var rowpos12 = document.getElementById("rowpos12");
+            var cell_rowpos12 = rowpos12.insertCell(-1);
+        var rowpos13 = document.getElementById("rowpos13");
+            var cell_rowpos13 = rowpos13.insertCell(-1);
+        var rowpos14 = document.getElementById("rowpos14");
+            var cell_rowpos14 = rowpos14.insertCell(-1);
+        var rowpos15 = document.getElementById("rowpos15");
+            var cell_rowpos15 = rowpos15.insertCell(-1);
+
+        var rowpos16 = document.getElementById("rowpos16");
+            var cell_rowpos16 = rowpos16.insertCell(-1);
+        var rowpos17 = document.getElementById("rowpos17");
+            var cell_rowpos17 = rowpos17.insertCell(-1);
+        var rowpos18 = document.getElementById("rowpos18");
+            var cell_rowpos18 = rowpos18.insertCell(-1);
+        var rowpos19 = document.getElementById("rowpos19");
+            var cell_rowpos19 = rowpos19.insertCell(-1);
+        var rowpos20 = document.getElementById("rowpos20");
+            var cell_rowpos20 = rowpos20.insertCell(-1);
+
+        cell_row_id.innerHTML = '<input type="text" class="cell" id="_idxS' + minusJ + '" name="_idxS' + minusJ + '" value="' + newId + '" disabled>';
+        
+        cell_rowsearch_system.innerHTML = `<select  class="cell" id="search_systemxS` + minusJ + `" name="search_systemxS` + minusJ + `">` +
+            `<option  selected value="google.kz">google.kz</option> {{search_system_list|safe}} </select>`;
+        cell_rowname_site.innerHTML = `<select  class="cell" id="name_sitexS` + minusJ + `" name="name_sitexS` + minusJ + `">` +
+            `<option  selected value="phonealmaty.kz">phonealmaty.kz</option> {{sites_list|safe|safe}} </select>`;
+
+        cell_rowpos1.innerHTML = '<input type="text" class="cell" min="0" max="130" id="pos1xS' + minusJ + '"  name="pos1xS' + minusJ + '" value="0">';
+        cell_rowpos2.innerHTML = '<input type="text" class="cell" min="0" max="130" id="pos2xS' + minusJ + '"  name="pos2xS' + minusJ + '" value="0">';
+        cell_rowpos3.innerHTML = '<input type="text" class="cell" min="0" max="130" id="pos3xS' + minusJ + '"  name="pos3xS' + minusJ + '" value="0">';
+        cell_rowpos4.innerHTML = '<input type="text" class="cell" min="0" max="130" id="pos4xS' + minusJ + '"  name="pos4xS' + minusJ + '" value="0">';
+        cell_rowpos5.innerHTML = '<input type="text" class="cell" min="0" max="130" id="pos5xS' + minusJ + '"  name="pos5xS' + minusJ + '" value="0">';
+
+        cell_rowpos6.innerHTML = '<input type="text" class="cell" min="0" max="130" id="pos6xS' + minusJ + '"  name="pos6xS' + minusJ + '" value="0">';
+        cell_rowpos7.innerHTML = '<input type="text" class="cell" min="0" max="130" id="pos7xS' + minusJ + '"  name="pos7xS' + minusJ + '" value="0">';
+        cell_rowpos8.innerHTML = '<input type="text" class="cell" min="0" max="130" id="pos8xS' + minusJ + '"  name="pos8xS' + minusJ + '" value="0">';
+        cell_rowpos9.innerHTML = '<input type="text" class="cell" min="0" max="130" id="pos9xS' + minusJ + '"  name="pos9xS' + minusJ + '" value="0">';
+        cell_rowpos10.innerHTML = '<input type="text" class="cell" min="0" max="130" id="pos10xS' + minusJ + '"  name="pos10xS' + minusJ + '" value="0">';
+
+        cell_rowpos11.innerHTML = '<input type="text" class="cell" min="0" max="130" id="pos11xS' + minusJ + '"  name="pos11xS' + minusJ + '" value="0">';
+        cell_rowpos12.innerHTML = '<input type="text" class="cell" min="0" max="130" id="pos12xS' + minusJ + '"  name="pos12xS' + minusJ + '" value="0">';
+        cell_rowpos13.innerHTML = '<input type="text" class="cell" min="0" max="130" id="pos13xS' + minusJ + '"  name="pos13xS' + minusJ + '" value="0">';
+        cell_rowpos14.innerHTML = '<input type="text" class="cell" min="0" max="130" id="pos14xS' + minusJ + '"  name="pos14xS' + minusJ + '" value="0">';
+        cell_rowpos15.innerHTML = '<input type="text" class="cell" min="0" max="130" id="pos15xS' + minusJ + '"  name="pos15xS' + minusJ + '" value="0">';
+
+        cell_rowpos16.innerHTML = '<input type="text" class="cell" min="0" max="130" id="pos16xS' + minusJ + '"  name="pos16xS' + minusJ + '" value="0">';
+        cell_rowpos17.innerHTML = '<input type="text" class="cell" min="0" max="130" id="pos17xS' + minusJ + '"  name="pos17xS' + minusJ + '" value="0">';
+        cell_rowpos18.innerHTML = '<input type="text" class="cell" min="0" max="130" id="pos18xS' + minusJ + '"  name="pos18xS' + minusJ + '" value="0">';
+        cell_rowpos19.innerHTML = '<input type="text" class="cell" min="0" max="130" id="pos19xS' + minusJ + '"  name="pos19xS' + minusJ + '" value="0">';
+        cell_rowpos20.innerHTML = '<input type="text" class="cell" min="0" max="130" id="pos20xS' + minusJ + '"  name="pos20xS' + minusJ + '" value="0">';
+
+    
+        $.ajax({
+               type : "POST",
+               url: "{% url 'key_phrases_insert' %}",
+               data: {
+                role: "readOnly",
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                dataType: "json",
+               },
+               success: function(data){
+                  //alert(data.idMax);
+                  nId = "_idxS" + minusJ;
+                  document.forms["form_table"][nId].value = data.idMax;
+               },
+               failure: function() {
+               }
+           });            
+    }
+    
+    //**************************
+    
+    function delete_row(j){
+    
+    if (j >= 0) {jStr = ""+j;}// for positive index
+        else {jStr = "S"+j*(-1);} // for negative index
+     
+
+        
+    id = document.forms["form_table"]["_idx"+jStr].value;
+    
+    $.ajax({
+               type : "POST",
+               url: "{% url 'key_phrases_delete' %}",
+               data: {
+                id : id,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                dataType: "json",
+               },
+               success: function(data){
+                  alert(data.msg);
+               },
+               failure: function() {
+               }
+           }); 
+    
+    
+    document.forms["form_table"]["_idx"+jStr].value = "";
+    document.forms["form_table"]["check_datex"+jStr].value = "";
+    document.forms["form_table"]["pos1x"+jStr].value = "";
+    document.forms["form_table"]["pos2x"+jStr].value = "";
+    document.forms["form_table"]["pos3x"+jStr].value = "";
+    document.forms["form_table"]["pos4x"+jStr].value = "";
+    document.forms["form_table"]["pos5x"+jStr].value = "";
+    
+    document.forms["form_table"]["pos6x"+jStr].value = "";
+    document.forms["form_table"]["pos7x"+jStr].value = "";
+    document.forms["form_table"]["pos8x"+jStr].value = "";
+    document.forms["form_table"]["pos9x"+jStr].value = "";
+    document.forms["form_table"]["pos10x"+jStr].value = "";
+
+    document.forms["form_table"]["pos11x"+jStr].value = "";
+    document.forms["form_table"]["pos12x"+jStr].value = "";
+    document.forms["form_table"]["pos13x"+jStr].value = "";
+    document.forms["form_table"]["pos14x"+jStr].value = "";
+    document.forms["form_table"]["pos15x"+jStr].value = "";
+
+    document.forms["form_table"]["pos16x"+jStr].value = "";
+    document.forms["form_table"]["pos17x"+jStr].value = "";
+    document.forms["form_table"]["pos18x"+jStr].value = "";
+    document.forms["form_table"]["pos19x"+jStr].value = "";
+    document.forms["form_table"]["pos20x"+jStr].value = "";
+    } 
+    
+    //***********
+    // check permission and hide buttons
+window.onload = function() {
+    //alert('{{gPermitLevel}}');
+    if (! ['superUser', 'admin'].includes('{{gPermitLevel}}')) // edit only for 'superUser', 'admin'
+	{
+	document.forms["form_table"]["submit"].style.visibility="hidden";
+	document.forms["form_table"]["buttonAdd"].style.visibility="hidden";
+	
+	var flag=1; // element exists
+	i= 0;
+	while ((flag == 1) && (i < 1000)) {
+		str = "buttonDel" + i;
+		if (document.forms["form_table"][str]) {
+		document.forms["form_table"][str].style.visibility="hidden"; }
+		else {flag=0;}
+	i++;}
+	}
+}
+</script>
+
+<center>
+    <br>
+    <h1>SEO results</h1>
+    <br>
+
+  <br>
+  {% load appname_tags %}
+  <form id="form_table" method="POST">
+      {% csrf_token %}
+  <table  border="0" class="Simple"  width="1000px"> 
+    <tr>
+        <td class="width20" style="vertical-align:top">
+            <div >
+            <table border="1">
+                
+                {% for value in drivers_no %}
+                  <tr>
+                      <td>
+                        {% if value == '5' or value == '10' or value == '15' or value == '20'  %}
+                        <input type="text" class="cell_color" id="no{{value}}"  name="no{{value}}" value="{{value}}" disables>
+                        {% else %}
+                        <input type="text" class="cell" id="no{{value}}"  name="no{{value}}" value="{{value}}" disables>
+                        {% endif %}
+                      </td>
+                  </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </td>
+    <td class="width80"  style="vertical-align:top">
+    <div class="scroll">
+        <table name="mytable" id="mytable" border="1">
+            
+              {% for x, row in drivers.iterrows %}
+                <tr name="row{{x}}" id="row{{x}}">
+                  {% for y, cell in row.items %}
+                    <td>
+                        {% if x == '_id' %}
+                            <input type="text" class="cell" id="{{x}}x{{y}}"  name="{{x}}x{{y}}" value="{{cell}}" disables>
+                        
+                        {% elif x == 'search_system' %}
+                        <select  class="cell" id="{{x}}x{{y}}" name="{{x}}x{{y}}"
+                                onchange="myChangeFunction('{{x}}x{{y}}', {{y}})">
+                               <option  selected value="{{cell}}">{{cell}}</option> {{search_system_list|safe}}
+                        </select>
+
+                        {% elif x == 'name_site' %}
+                        <select  class="cell" id="{{x}}x{{y}}" name="{{x}}x{{y}}"
+                                onchange="myChangeFunction('{{x}}x{{y}}', {{y}})">
+                               <option  selected value="{{cell}}">{{cell}}</option> {{sites_list|safe}}
+                        </select>   
+
+                        {% elif x == 'dataset' %}
+                        <input type="button" class="cell" value="Delete" name="buttonDel{{y}}" id="buttonDel{{y}}"
+                        onclick="delete_row({{y}})">
+
+                        {% elif x == 'pos5' or x == 'pos10' or x == 'pos15' or x == 'pos20'  %}
+                            <input type="text" class="cell_color" min="0" max="130" id="{{x}}x{{y}}"  name="{{x}}x{{y}}" value="{{cell|default:0}}"
+                            onchange="myChangeFunction('{{x}}x{{y}}', {{y}})">
+                        
+                        {% else %}    
+                            <input type="text" class="cell" min="0" max="130" id="{{x}}x{{y}}"  name="{{x}}x{{y}}" value="{{cell|default:0}}"
+                            onchange="myChangeFunction('{{x}}x{{y}}', {{y}})">
+                        {% endif %}
+                    </td>
+                  {% endfor %}
+
+                </tr>
+              {% endfor %}
+                <tr name="row{{x}}del" id="row{{x}}del"></tr>
+                {% for j in y %}
+                    <td></td>
+                {% endfor %}
+                </tr>
+          </table>
+    </div>
+</td>
+</tr>
+</table>
+<br>
+<div class="Travel">
+<input  type="submit" name="submit" value="submit">
+<input type="button" name="buttonAdd" value="+ Add" onclick="return new_row()">
+</div>
+<div id="output2">
+</div>
+</form>
+</center>
+
+<script>
+
+    $('#form_table').on('submit', function(e){
+        //alert('54');
+        e.preventDefault();
+        var flag=1; // element exists
+        j= - minusJ;
+            while ((flag == 1) && (j < 1000)) {
+                    if (j >= 0) {jStr = "x"+j;}// element name prefix for positive index
+                else {jStr = "xS"+j*(-1);} // element name prefix for negative index
+                
+        //alert("_id"+jStr);
+            if(typeof(document.forms["form_table"]['_id'+jStr]) == 'undefined' || 
+                document.forms["form_table"]['_id'+jStr] == null)
+                {flag=0;}
+            //alert(document.forms["form_table"]['user_name'+iStr].style.color+":"+document.forms["form_table"]['user_name'+iStr].value);
+            if ((j < 0) || // negative index
+                ((document.forms["form_table"]['_id'+jStr]) && // element exists
+                (document.forms["form_table"]['_id'+jStr].style.color == 'red' )))
+                {//.style.color == 'red' - changed
+                //alert("***!***"+jStr+":"+flag);
+                if (document.forms["form_table"]['pos6'+jStr]) {v_pos6 = document.forms["form_table"]['pos6'+jStr].value;} else {v_pos6 = '';}
+                if (document.forms["form_table"]['pos7'+jStr]) {v_pos7 = document.forms["form_table"]['pos7'+jStr].value;} else {v_pos7 = '';}
+                if (document.forms["form_table"]['pos8'+jStr]) {v_pos8 = document.forms["form_table"]['pos8'+jStr].value;} else {v_pos8 = '';}
+                if (document.forms["form_table"]['pos9'+jStr]) {v_pos9 = document.forms["form_table"]['pos9'+jStr].value;} else {v_pos9 = '';}
+                if (document.forms["form_table"]['pos10'+jStr]) {v_pos10 = document.forms["form_table"]['pos10'+jStr].value;} else {v_pos10 = '';}
+                if (document.forms["form_table"]['pos11'+jStr]) {v_pos11 = document.forms["form_table"]['pos11'+jStr].value;} else {v_pos11 = '';}
+                if (document.forms["form_table"]['pos12'+jStr]) {v_pos12 = document.forms["form_table"]['pos12'+jStr].value;} else {v_pos12 = '';}
+                if (document.forms["form_table"]['pos13'+jStr]) {v_pos13 = document.forms["form_table"]['pos13'+jStr].value;} else {v_pos13 = '';}
+                if (document.forms["form_table"]['pos14'+jStr]) {v_pos14 = document.forms["form_table"]['pos14'+jStr].value;} else {v_pos14 = '';}
+                if (document.forms["form_table"]['pos15'+jStr]) {v_pos15 = document.forms["form_table"]['pos15'+jStr].value;} else {v_pos15 = '';}
+                if (document.forms["form_table"]['pos16'+jStr]) {v_pos16 = document.forms["form_table"]['pos16'+jStr].value;} else {v_pos16 = '';}
+                if (document.forms["form_table"]['pos17'+jStr]) {v_pos17 = document.forms["form_table"]['pos17'+jStr].value;} else {v_pos17 = '';}
+                if (document.forms["form_table"]['pos18'+jStr]) {v_pos18 = document.forms["form_table"]['pos18'+jStr].value;} else {v_pos18 = '';}
+                if (document.forms["form_table"]['pos19'+jStr]) {v_pos19 = document.forms["form_table"]['pos19'+jStr].value;} else {v_pos19 = '';}
+                if (document.forms["form_table"]['pos20'+jStr]) {v_pos20 = document.forms["form_table"]['pos20'+jStr].value;} else {v_pos20 = '';}
+                //alert("**223**"+jStr+":"+flag);
+                $.ajax({
+                    type : "POST",
+                    url: "{% url 'key_phrases_save' %}",
+                    data: {
+                    id : $('#_id'+jStr).val(),
+                    search_system : $('#search_system'+jStr).val(),
+                    name_site : $('#name_site'+jStr).val(),
+                    pos1 : $('#pos1'+jStr).val(),
+                    pos2 : $('#pos2'+jStr).val(),
+                    pos3 : $('#pos3'+jStr).val(),
+                    pos4 : $('#pos4'+jStr).val(),
+                    pos5 : $('#pos5'+jStr).val(),
+                    pos6 : v_pos6,
+                    pos7 : v_pos7,
+                    pos8 : v_pos8,
+                    pos9 : v_pos9,
+                    pos10 : v_pos10,
+                    pos11 : v_pos11,
+                    pos12 : v_pos12,
+                    pos13 : v_pos13,
+                    pos14 : v_pos14,
+                    pos15 : v_pos15,
+                    pos16 : v_pos16,
+                    pos17 : v_pos17,
+                    pos18 : v_pos18,
+                    pos19 : v_pos19,
+                    pos20 : v_pos20,
+                    
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    dataType: "json",
+                    },
+                success: function(data){
+                      $('#output2').html(data.msg) /* response message */
+                    },
+                failure: function() {
+                    }
+                }); 
+            }//.style.color == 'red' - changed
+        j++;};
+    });   
+     
+</script>
+
+{% include 'includes/footer.html' %}
